@@ -1,3 +1,3 @@
 # Modern C++ Lessons 
 
-1) [01-basics.md][basics]
+1) [basics](01-basics.md)
