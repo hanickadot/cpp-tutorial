@@ -85,7 +85,15 @@ Algorithm which will take at all functions from previous step, and look if the f
 	* Promotion (possible with trivial conversion)
 * Rank 3
 	* Standard conversions (possible with trivial conversion)
-* Rest
+* Worst case
 	* User-defined conversion 
 		* with possible trivial conversion
 		* with possible standard conversion
+* Last resort
+	* Ellipsis argument
+	
+Functions are sorted by rank, and if there is only such function which is in the best rank is selected, if there are multiple function, the call is *ambigous*.
+
+#### Templated functions
+
+Templated functions has a bit lower priority, in case of *ambigious* call, the non-template function should be selected.
