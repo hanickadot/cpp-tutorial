@@ -2,7 +2,7 @@
 
 Each value has a type, it can be built-in type or user provided type.
 
-## Implicit types
+## Build-in types
 
 ### Numerical types
 * `bool` contains `true` or `false` value
