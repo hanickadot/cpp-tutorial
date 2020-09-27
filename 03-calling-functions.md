@@ -94,11 +94,9 @@ Algorithm which will take at all functions from previous step, and look if the f
 * Last resort
 	* Ellipsis argument
 	
-Functions are sorted by rank, and if there is only such function which is in the best rank is selected, if there are multiple function, the call is *ambigous*.
+Functions are sorted by rank, and if there is only such function which is in the best rank is selected, if there are multiple function, the call is *ambigous*. 
 
-#### Templated functions
-
-Templated functions has a bit lower priority, in case of *ambigious* call, the non-template function should be selected.
+If functions has multiple arguments, calculate sum of ranks and select the function with the lowest number, if there are multiple candidates with same score, the call is *ambigious* and error.
 
 ## Access check
 
