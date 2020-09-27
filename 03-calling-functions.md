@@ -97,3 +97,113 @@ Functions are sorted by rank, and if there is only such function which is in the
 #### Templated functions
 
 Templated functions has a bit lower priority, in case of *ambigious* call, the non-template function should be selected.
+
+## Access check
+
+After function is selected, then compiler checks if the function is accessible from your current context. 
+
+### Public methods
+
+Methods and members available to anyone. `struct` types are public by default.
+
+### Protected methods
+
+Methods and members available only to friends and inherited types. `class` types are protected by default.
+
+### Private methods
+
+Methods and members available only to itself and friends.
+
+### Friends 
+
+Things marked `friend` can access internals of class even if there is an access specifier diallowing it.
+
+#### Functions
+
+You can mark function declaration inside a class scope, and provide definition outside of the class.
+
+```c++
+struct something {
+	friend int get(something & s);
+};
+
+int get(something & s) {
+	// ...
+}
+```
+
+#### Classes
+
+You can mark a class/struct as a friend, all member methods will be available to access the class internals.
+
+```c++
+struct something {
+	friend struct very_close_friend;
+	friend struct also_close_friend;
+};
+
+int get(something & s) {
+	// ...
+}
+```
+
+#### Methods
+
+Methods marked `friend` are standalone function even if they are defined inside a class.
+
+```c++
+struct something {
+    int a;
+    
+    friend int get(something & s) {
+        return s.a;
+    }
+};
+```
+
+## Function template specialization
+
+Template functions can be specialized. 
+TODO: more
+
+## Virtual dispatch
+
+If a function is marked `virtual` a virtual table is created for the type. And dispatch of the function is than done dynamically during runtime (but it can be optimized). 
+
+```c++
+struct animal {
+	virtual void make_sound() { beep(); }
+};
+```
+
+If a type is inherited from original base type, it can provide it's implementation. 
+
+```c++
+struct dog: animal {
+	virtual void make_sound() overload { woof(); }
+};
+```
+
+Make sure you always mark function with `overload` if is your intention to overload the original. In case your function has a different signature the keyword `overload` will help by giving you an error. If the keyword is not present, you won't get an error (maybe it was your intention to provide new method).
+
+You can't store different types in a container, you must make an effort and keep their lifetime somehow differently. 
+
+```c++
+std::vector<animal> vec; 
+vec.push_back(dog{}); // will never work
+```
+
+This is happening because inherited type can have different size than base. Use `std::unique_ptr` instead.
+
+To pass a polymorphic type to a function, always use reference or some pointer type:
+
+```c++
+void foo(animal & a) {
+	a.make_sound(); // will call right make_sound based on real type
+}
+```
+
+If you pass by value `void foo(animal a)` your type will be silently converted to `animal`.
+
+
+
