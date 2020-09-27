@@ -1,5 +1,7 @@
 # Calling functions
 
+The algoritm of selecting a function do step by step and never returns!
+
 * Name lookup
 * Template argument deduction
 * Overload resolution
@@ -205,5 +207,27 @@ void foo(animal & a) {
 
 If you pass by value `void foo(animal a)` your type will be silently converted to `animal`.
 
+### Abstract classes
+
+You can mark a method abstract with `=0`:
+
+```c++
+struct animal {
+	virtual void make_sound() = 0;
+};
+```
+
+Which will block instantion of object of such type, and in order to use the interface `animal` (or so called "abstract" class) you need to inherit from it, and use inherited type instead.
+
+## Deleting functions
+
+If a function is marked deleted, you will get a compile-time error if it's selected.
+
+```c++
+void foo(int) = delete;
+void foo(char) { ... }
+```
+
+Here if you call `foo('a')` it will call the `char` variant, but if you call it with an `int` you will get error. But if you didn't provide `void foo(int)` variant, it will be silently converted.
 
 
