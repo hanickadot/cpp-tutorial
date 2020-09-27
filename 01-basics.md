@@ -1,4 +1,4 @@
-# 1: Basics
+# Basics
 
 I do expect you to be at least familiar with C-like syntax.
 

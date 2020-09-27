@@ -1,4 +1,4 @@
-#2: Types and implicit conversions
+# Types and implicit conversions
 
 Each value has a type, it can be built-in type or user provided type.
 
